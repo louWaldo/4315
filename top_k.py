@@ -37,27 +37,29 @@ if __name__ == "__main__":
     with open('input.txt') as file:
         lines = file.readlines() 
 
-    st = map(lambda i: re.findall(r'[.\d]+', i), lines)
+    floaties = map(lambda i: re.findall('-?\d+\.{1}\d+', i), lines)
+    inties = map(lambda i: re.findall('-?(?<![.])\b[0-9]+\b(?!\.[0-9])', i), lines)
 
-    print(s)
+    print(*inties)
     print('fuck you')
-    print(*st)
+    print(*floaties)
+   
 
-    #for k in s:
+
+
+
+    
+
+    
+
+
+    # for k in s:
     #    for j in s[k]:
      #       if j.isnumeric():
       #          arrInt.append(int(j))
        #     else:
         #        arrFloat.append(float(j))
-        
-
-
-
-
-    #file = open('computer/hello/COSC_4315/input.txt')
-    #contents = file.read()
-    #myList = contents.split()
-
+    
     #arrInt = []
     #arrFloat = []
     #for i in myList:
