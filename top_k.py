@@ -25,7 +25,7 @@ def frequencies(arr, n, k):
     print(k, "numbers with most occurences are: ")
     for i in range(k):
         print(a[i][0], "  ", a[i][1])
-    
+
 
 
 if __name__ == "__main__":
@@ -34,16 +34,12 @@ if __name__ == "__main__":
     arrInt = []
     arrFloat = []
 
-    with open('computer/hello/COSC_4315/input.txt') as file:
+    with open('input.txt') as file:
         lines = file.readlines() 
 
+    st = map(lambda i: re.findall(r'[.\d]+', i), lines)
 
-    for i in lines:
-        s.append(re.findall(r'[.\d]+', i))
-
-    st = filter(lambda i: re.split(r'[.\d]+', i), lines)
-    
-    print(*s)
+    print(s)
     print('fuck you')
     print(*st)
 
