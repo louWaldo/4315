@@ -1,5 +1,8 @@
 from curses.ascii import isdigit
 import re
+import itertools
+
+
 
 def frequencies(arr, n, k):
     mp = {}
@@ -15,8 +18,8 @@ def frequencies(arr, n, k):
         a[j] = [i, mp[i]]
         j += 1
     
-    for i in range(len(a)):
-        print(a[i][0], "  ", a[i][1])
+    #for i in range(len(a)):
+     #   print(a[i][0], "  ", a[i][1])
 
     a = sorted(a, key = lambda x: x[0], reverse = True)
     a = sorted(a, key = lambda x: x[1], reverse = True)
@@ -34,23 +37,19 @@ if __name__ == "__main__":
     arrInt = []
     arrFloat = []
 
-    with open('input.txt') as file:
+    with open('Documents/cosc_4315/testIn.txt') as file:
         lines = file.readlines() 
 
-    floaties = map(lambda i: re.findall('-?\d+\.{1}\d+', i), lines)
-    inties = map(lambda i: re.findall('-?(?<![.])\b[0-9]+\b(?!\.[0-9])', i), lines)
+    floatMap = map(lambda i: re.findall('-?\d+\.{1}\d+', i), lines)
+    floatList = list(map(lambda i: re.findall('-?\d+\.{1}\d+', i), lines))
 
-    print(*inties)
-    print('fuck you')
-    print(*floaties)
-   
-
-
-
-
+    flat_list = list(itertools.chain(*floatList))
     
+    print(*floatList)
+    print('\n\n')
+    print(flat_list)
 
-    
+    frequencies(flat_list, len(flat_list), 1)
 
 
     # for k in s:
