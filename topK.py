@@ -33,18 +33,24 @@ def freqNum(k,infile,out):
     orgFloat = list(map(lambda i: re.findall('-?\d+\.{1}\d+', i), lines))
     orgInt = list(map(lambda i: re.findall(r'-?\b(?<!\.)\d+(?!\.)\b', i), lines))
     flatten=lambda i: sum(map(flatten,i),[]) if isinstance(i,list) else [i]
+    strToInt = lambda i: list(map(int, i))
+    strToFloat = lambda i: list(map(float, i))
+    unique = lambda i: bag_to_set(i)
+    freq = lambda i: frequencies(i)
+    ziptie = lambda i, j: zip(i, j)
 
     floatFlat = flatten(orgFloat)
     intFlat = flatten(orgInt)
+    floatFlat = flatten(orgFloat)
 
-    floatNums = list(map(float, floatFlat))
-    intNums = list(map(int, intFlat))
+    intNums = strToInt(intFlat)
+    floatNums = strToFloat(floatFlat)
 
     floatSorted = sorted(floatNums)
     intSorted = sorted(intNums)
 
-    floatUnique = bag_to_set(floatSorted)
-    intUnique = bag_to_set(intSorted)
+    floatUnique = unique(floatSorted)
+    intUnique = unique(intSorted)
 
     intFreq = frequencies(intSorted)
     fpFreq = frequencies(floatSorted)
@@ -55,8 +61,9 @@ def freqNum(k,infile,out):
     fpList = list(fpZip)
     intList = list(intZip)
 
-    intLast = sorted(intList, key = lambda x: x[1], reverse=True)
-    fpLast = sorted(fpList, key = lambda x: x[1], reverse=True)
+    intLast = sortByFreq(intList)
+    fpLast = sortByFreq(fpList)
+    
 
     file.close()
     i = 0
