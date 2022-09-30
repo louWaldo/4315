@@ -5,6 +5,8 @@ import itertools
 import sys
 from numpy import FPE_DIVIDEBYZERO
 
+#This function takes in a tuple object and converts it into a string to be written to outputfile
+#This also formats the string such that it meets the standards in the requirements
 def convTup(tup):
     st = ''.join(map(str,tup))
     lastchr = len(st)-2
@@ -12,14 +14,14 @@ def convTup(tup):
     fot = ot.replace(',','')
     return (fot + '\n')
 
+#This function takes in a tuple object  and the outputfile name, then appends the stringified tuple into the outputfile, returns 0
+#Stringification occurs at the convTup function above
 def writeOut(strO,out):
     with open(out,"a") as f:
         f.write(convTup((str(strO) + '\n' )))
-        
-        #f.write(convTup(str((strO[0]))) + '\n')
     f.close()
     return 0
-
+#This Function 
 def writeTout(strT,out):
     with open(out,"a") as f:
         f.write(strT)
