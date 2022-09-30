@@ -1,6 +1,50 @@
 from curses.ascii import isdigit
+from itertools import groupby
 import re
 import itertools
+
+from numpy import FPE_DIVIDEBYZERO
+
+
+
+def recursive_sort(a_list):
+    def helper_function(list_to_be_sorted, list_already_sorted):
+        new = []
+        if len(list_to_be_sorted) == 0:
+            return list_already_sorted
+        else:    
+            x = min(list_to_be_sorted)    
+            list_to_be_sorted.remove(x)
+            new.append(x)
+            return helper_function(list_to_be_sorted, list_already_sorted + new)
+    return helper_function(a_list, [])
+
+
+
+
+def rtraverse2(seq, j, t):
+    if j < len(seq):
+        if seq[j][1] == t:
+            print(seq[j])
+        rtraverse2(seq, j+1, t)
+
+
+
+def rtraverse(seq, k, i):
+    if i < k:
+        print (seq[i])
+        rtraverse(seq, k, i+1)
+    if i == k:
+        j = 0
+        temp = seq[k:]
+        t = seq[i][1]
+        print('+++++++++++++++++++++++')
+        rtraverse2(temp, j, t)
+        
+
+
+
+
 
 def bag_to_set(old_list):
     new_list = []
@@ -14,32 +58,11 @@ def bag_to_set(old_list):
     return new_list 
 
 
-# defining a function to find the frequencies for every unique element in the list recursively
-def frequencies(listA):
-	
-	# checking the base condition when the list is empty
-	if len(listA) == 0:
-		# returning an empty dictionary
-		return {}
-
-	# processing the value of other elements of list except the first element
-	# so we need to call the recursive function exclusing the first element
-	freq = frequencies(listA[1:])
-	
-	# processing the first element of the list
-	# checking if the first element is already present in the freq dictionary or not
-	if listA[0] in freq:
-		# if present increment its count
-		freq[listA[0]] += 1
-	# if not present store it into the dictionary
-	# as it is found for the first time make its value as 1
-	else:
-		freq[listA[0]] = 1
-
-	# return the frequencies dict formed
-	return freq
-
-
+def frequencies(lst):
+    if len(lst) == 0:
+        return []
+    else:
+        return [lst.count(lst[0])] + frequencies(lst[lst.count(lst[0]):])
 
 
 if __name__ == "__main__":
@@ -51,34 +74,45 @@ if __name__ == "__main__":
     with open('Documents/cosc_4315/input.txt') as file:
         lines = file.readlines() 
 
-    org_float = list(map(lambda i: re.findall('-?\d+\.{1}\d+', i), lines))
-    org_int = list(map(lambda i: re.findall(r'-?\b(?<!\.)\d+(?!\.)\b', i), lines))
+    orgFloat = list(map(lambda i: re.findall('-?\d+\.{1}\d+', i), lines))
+    orgInt = list(map(lambda i: re.findall(r'-?\b(?<!\.)\d+(?!\.)\b', i), lines))
     flatten=lambda i: sum(map(flatten,i),[]) if isinstance(i,list) else [i]
 
 
-    float_list = flatten(org_float)
-    int_list = flatten(org_int)
+    floatFlat = flatten(orgFloat)
+    intFlat = flatten(orgInt)
 
-    f_nums = list(map(float, float_list))
-    i_nums = list(map(int, int_list))
+    floatNums = list(map(float, floatFlat))
+    intNums = list(map(int, intFlat))
 
-    fl_sorted = sorted(f_nums)
-    int_sorted = sorted(int_list)
+    floatSorted = sorted(floatNums)
+    intSorted = sorted(intNums)
 
-    unique_floats = bag_to_set(fl_sorted)
-    unique_ints = bag_to_set(int_sorted)
+    floatUnique = bag_to_set(floatSorted)
+    intUnique = bag_to_set(intSorted)
 
 
+    intFreq = frequencies(intSorted)
+    fpFreq = frequencies(floatSorted)
 
-    
-    print(float_list)
-    print(f_nums)
-    print(fl_sorted)
-    print(unique_floats, '\n\n')    
-    print('===================================================================================================')
-    print(int_list)
-    print(i_nums)
-    print(int_sorted)
-    print(unique_ints)
+    intZip = zip(intUnique, intFreq)
+    fpZip = zip(floatUnique, fpFreq)
 
-    
+    fpList = list(fpZip)
+    intList = list(intZip)
+
+    intLast = sorted(intList, key = lambda x: x[1], reverse=True)
+    fpLast = sorted(fpList, key = lambda x: x[1], reverse=True)
+
+    # print(orgInt, '\n')
+    # print(intFlat)
+    # print(intNums)
+    # print(intSorted)
+    # print(intUnique)
+    # print(intFreq)
+    # print(intList)
+    # print(intLast)
+    k = 3
+    i = 0
+    rtraverse(intLast, k, i)
+
