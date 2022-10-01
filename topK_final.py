@@ -38,7 +38,6 @@ def freqNum(k,infile,out):
     ziptie = lambda i, j: zip(i, j)
     sortByFreq = lambda i: sorted(i, key = lambda j: j[1], reverse = True)
 
-
     intFlat = flatten(orgInt)
     floatFlat = flatten(orgFloat)
 
@@ -67,18 +66,6 @@ def freqNum(k,infile,out):
     i = 0
     rtraverse(intLast, k, out, i)
     rtraverse(fpLast, k, out, i)
-
-def recursive_sort(a_list):
-    def helper_function(list_to_be_sorted, list_already_sorted):
-        new = []
-        if len(list_to_be_sorted) == 0:
-            return list_already_sorted
-        else:    
-            x = min(list_to_be_sorted)    
-            list_to_be_sorted.remove(x)
-            new.append(x)
-            return helper_function(list_to_be_sorted, list_already_sorted + new)
-    return helper_function(a_list, [])
 
 def rtraverse2(seq, j, out, t):
     if j < len(seq):
