@@ -88,19 +88,6 @@ def freqNum(k,infile,out):
     rtraverse(intLast, k, out, i)
     rtraverse(fpLast, k, out, i)
 
-#sorting the lists recursively
-def recursive_sort(a_list):
-    def helper_function(list_to_be_sorted, list_already_sorted):
-        new = []
-        if len(list_to_be_sorted) == 0:
-            return list_already_sorted
-        else:    
-            x = min(list_to_be_sorted)    
-            list_to_be_sorted.remove(x)
-            new.append(x)
-            return helper_function(list_to_be_sorted, list_already_sorted + new)
-    return helper_function(a_list, [])
-
 #this function is the function that recursively goes through the subsequence and finds the target frequency of the kth tuple
 def rtraverse2(seq, j, out, t):
     if j < len(seq):
@@ -113,18 +100,30 @@ def rtraverse2(seq, j, out, t):
 #otherwise writeout the i'th element in the sequence, which is sent to writeOut()
 #however if we get to the kth element, check the remaining subsequence for any tuples with the frequency of the kth element in the seq
 def rtraverse(seq, k, out, i):
-    if i < k:
-        if type(seq[i][0]) == int and i == 0:
-            writeTout("integer:"+'\n',out)
-        elif type(seq[i][0]) == float and i == 0:
-            writeTout("real:"+'\n',out)
-        writeOut(seq[i],out)
-        rtraverse(seq, k, out, i+1)
-    if i == k:
-        j = 0
-        temp = seq[k:]
-        t = seq[i][1]
-        rtraverse2(temp, j, out, t)
+    if len(seq) >= k:
+        if i < k:
+            if type(seq[i][0]) == int and i == 0:
+                writeTout("integer:"+'\n',out)
+            elif type(seq[i][0]) == float and i == 0:
+                writeTout("real:"+'\n',out)
+            writeOut(seq[i],out)
+            rtraverse(seq, k, out, i+1)
+        elif i == k:
+            j = 0
+            temp = seq[k:]
+            print(seq)
+            t = seq[i][1]
+            rtraverse2(temp, j, out, t)
+    elif len(seq) < k:
+        diff = len(seq)
+        if i < diff:
+            if type(seq[i][0]) == int and i == 0:
+                writeTout("integer:"+'\n',out)
+            elif type(seq[i][0]) == float and i == 0:
+                writeTout("real:"+'\n',out)
+            writeOut(seq[i],out)
+            rtraverse(seq, k, out, i+1)
+
 #creates the sets of the numbers/reals
 def bag_to_set(old_list):
     new_list = []
