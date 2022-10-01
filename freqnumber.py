@@ -100,8 +100,9 @@ def rtraverse2(seq, j, out, t):
 #otherwise writeout the i'th element in the sequence, which is sent to writeOut()
 #however if we get to the kth element, check the remaining subsequence for any tuples with the frequency of the kth element in the seq
 def rtraverse(seq, k, out, i):
-    if len(seq) >= k:
+    if len(seq) > k:
         if i < k:
+            print(i)
             if type(seq[i][0]) == int and i == 0:
                 writeTout("integer:"+'\n',out)
             elif type(seq[i][0]) == float and i == 0:
@@ -111,10 +112,9 @@ def rtraverse(seq, k, out, i):
         elif i == k:
             j = 0
             temp = seq[k:]
-            print(seq)
             t = seq[i][1]
             rtraverse2(temp, j, out, t)
-    elif len(seq) < k:
+    elif len(seq) <= k:
         diff = len(seq)
         if i < diff:
             if type(seq[i][0]) == int and i == 0:
@@ -156,4 +156,5 @@ if __name__ == "__main__":
         else:
             out = "".join([val for val in pattern[(pattern.find("=")+1):]])
         i+=1
-    freqNum(int(k),infile,out)
+    m  = int(k)-1
+    freqNum(m,infile,out)
